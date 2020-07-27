@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    <h1>
-        Home page of Flask
-    </h1>
+{% extends "layout.html" %}
+{%block body%}
     {% for post in posts %}
         <ul>
             <li> Title : {{post.title}} </li>
@@ -19,5 +11,4 @@
         </ul>
     {% endfor %}
 
-</body>
-</html>
+{% endblock %}
