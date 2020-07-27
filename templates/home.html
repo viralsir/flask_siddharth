@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1>
+        Home page of Flask
+    </h1>
+    {% for post in posts %}
+        <ul>
+            <li> Title : {{post.title}} </li>
+            <li> content : {{post.content}} </li>
+            <li> author : {{post.author}} </li>
+            <li> date_posted : {{post.date_posted}} </li>
+
+
+        </ul>
+    {% endfor %}
+
+</body>
+</html>
