@@ -1,5 +1,5 @@
 from flask_wtf.form import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField
+from wtforms import StringField,PasswordField,SubmitField,BooleanField
 from wtforms.validators import DataRequired,Email,EqualTo,Length
 from blog.model import user
 
@@ -19,3 +19,12 @@ class RegisterForm(FlaskForm):
         newuser = user.query.filter_by(email=email.data).first();
         if newuser:
             raise ValueError('email is already taken please choose another one')
+
+
+
+
+class LoginForm(FlaskForm):
+    email=StringField('Email',validators=[DataRequired(),Email()])
+    password=PasswordField('Password',validators=[DataRequired(),])
+    submit=SubmitField('Log in')
+    remember_me=BooleanField("Remember me")
