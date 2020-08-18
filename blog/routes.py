@@ -1,4 +1,4 @@
-from  flask import Flask,render_template,redirect,url_for,flash
+from  flask import Flask,render_template,redirect,url_for,flash,request
 from blog.forms import RegisterForm,LoginForm
 from blog import app,db
 from blog.model import user
@@ -38,9 +38,14 @@ def login():
         nuser=user.query.filter_by(email=form.email.data , password=form.password.data).first();
         if nuser :
             login_user(nuser,remember=form.remember_me.data)
-
-            flash(f"login successfully ","success")
-            return redirect(url_for('Home'))
+            next=request.args.get("next")
+            print(next)
+            if next :
+                 flash(f"login successfully ", "success")
+                 return redirect(next)
+            else :
+                 flash(f"login successfully ","success")
+                 return redirect(url_for('Home'))
         else :
             flash("username or password are incorrect","danger")
     return render_template("login.html",title="Login",form=form)
@@ -54,5 +59,6 @@ def logout():
 
 
 @app.route("/account")
+@login_required
 def account():
      return render_template("Account.html")
