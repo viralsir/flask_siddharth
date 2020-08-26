@@ -1,5 +1,5 @@
 from  flask import Flask,render_template,redirect,url_for,flash,request
-from blog.forms import RegisterForm,LoginForm
+from blog.forms import RegisterForm,LoginForm,UpdateForm
 from blog import app,db
 from blog.model import user
 from flask_login import login_user,current_user,logout_user,login_required
@@ -25,7 +25,7 @@ def register1():
         db.session.add(newuser)
         db.session.commit()
         flash(f"account is created please login ","success")
-        return redirect(url_for('about'))
+        return redirect(url_for('login'))
 
     return render_template("register.html",form=form)
 
@@ -61,4 +61,6 @@ def logout():
 @app.route("/account")
 @login_required
 def account():
-     return render_template("Account.html")
+     form=UpdateForm()
+     image_file=url_for('static',filename='profile_pics/'+current_user.image_fie)
+     return render_template("Account.html",image_file=image_file,form=form)
