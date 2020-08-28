@@ -28,14 +28,14 @@ class UpdateForm(FlaskForm):
     submit=SubmitField("Update")
 
     def validate_username(self,username):
-        newuser=user.query.filter_by(username=username.data).first();
-        if newuser.username != current_user.username:
+        if current_user.username != username.data :
+            newuser=user.query.filter_by(username=username.data).first();
             if newuser :
                 raise ValueError('username is already taken please choose another one')
 
     def validate_email(self, email):
-        newuser = user.query.filter_by(email=email.data).first();
-        if newuser.email != current_user.email :
+        if email.data != current_user.email:
+            newuser = user.query.filter_by(email=email.data).first();
             if newuser:
                 raise ValueError('email is already taken please choose another one')
 
