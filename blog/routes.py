@@ -3,6 +3,9 @@ from blog.forms import RegisterForm,LoginForm,UpdateForm
 from blog import app,db
 from blog.model import user
 from flask_login import login_user,current_user,logout_user,login_required
+import secrets
+import os
+
 
 @app.route("/")
 @app.route("/home")
@@ -56,6 +59,14 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+def save_picture(form_picture):
+    print("inside save_picture")
+    random_hex=secrets.token_hex(8)
+    f_name,f_ext=os.path.splitext(form_picture.filename)
+    picture_fn=random_hex+f_ext;
+    picture_path=os.path.join(app.root_path,'static/profile_pics',picture_fn)
+    form_picture.save(picture_path)
+    return picture_fn;
 
 
 @app.route("/account",methods=['GET','POST'])
@@ -63,14 +74,20 @@ def logout():
 def account():
      form=UpdateForm()
      if form.validate_on_submit() :
+         if form.picture.data :
+             picture_name=save_picture(form.picture.data)
+             current_user.image_fie=picture_name
+
          current_user.username=form.username.data
          current_user.email=form.email.data
          #db.session.add(current_user);
          db.session.commit();
          flash(f"Your accout has been updated.","success")
-         redirect(url_for("Home"))
+         print('redirect to home')
+         return redirect(url_for("Home"))
      elif request.method=="GET" :
          form.username.data=current_user.username
          form.email.data=current_user.email
+
      image_file=url_for('static',filename='profile_pics/'+current_user.image_fie)
      return render_template("Account.html",image_file=image_file,form=form)
