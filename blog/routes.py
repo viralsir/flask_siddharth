@@ -1,7 +1,7 @@
 from  flask import Flask,render_template,redirect,url_for,flash,request
-from blog.forms import RegisterForm,LoginForm,UpdateForm
+from blog.forms import RegisterForm,LoginForm,UpdateForm,PostForm
 from blog import app,db
-from blog.model import user
+from blog.model import user,Post
 from flask_login import login_user,current_user,logout_user,login_required
 import secrets
 import os
@@ -10,7 +10,8 @@ import os
 @app.route("/")
 @app.route("/home")
 def Home():
-    return render_template("home.html",title="Home")
+    posts=Post.query.all();
+    return render_template("home.html",title="Home",posts=posts)
 
 
 
@@ -91,3 +92,17 @@ def account():
 
      image_file=url_for('static',filename='profile_pics/'+current_user.image_fie)
      return render_template("Account.html",image_file=image_file,form=form)
+
+
+@app.route("/post/new",methods=['GET','POST'])
+@login_required
+def new_post():
+    form=PostForm()
+    if form.validate_on_submit():
+        post=Post(title=form.title.data,content=form.content.data,user_id=current_user.id)
+        db.session.add(post)
+        db.session.commit()
+        flash("Post is created","success")
+        return redirect(url_for('Home'))
+
+    return render_template("new_post.html",form=form)
