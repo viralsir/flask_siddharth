@@ -4,14 +4,14 @@
     <table class="table table-sm table-dark">
         <tr>
             <th>title</th>
-            <th>content</th>
-            <th> date & time </th>
+
         </tr>
         {% for post in posts %}
         <tr>
-            <td> {{ post.title }}</td>
-            <td> {{ post.content }}</td>
-            <td> {{ post.date_posted}}</td>
+            <td><a href="{{ url_for('view_post',post_id=post.id) }} ">
+                {{ post.title }}
+            </a> </td>
+
         </tr>
         {% endfor %}
     </table>

@@ -67,6 +67,7 @@ def save_picture(form_picture):
     picture_fn=random_hex+f_ext;
     picture_path=os.path.join(app.root_path,'static/profile_pics',picture_fn)
     form_picture.save(picture_path)
+
     return picture_fn;
 
 
@@ -78,7 +79,6 @@ def account():
          if form.picture.data :
              picture_name=save_picture(form.picture.data)
              current_user.image_fie=picture_name
-
          current_user.username=form.username.data
          current_user.email=form.email.data
          #db.session.add(current_user);
@@ -106,3 +106,11 @@ def new_post():
         return redirect(url_for('Home'))
 
     return render_template("new_post.html",form=form)
+
+@app.route("/post/<int:post_id>")
+@login_required
+def view_post(post_id):
+    post=Post.query.get(post_id);
+    author=user.query.get(post.user_id);
+    return render_template("post_details.html",post=post,author=author)
+

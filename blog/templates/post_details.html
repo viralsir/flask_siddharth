@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class="media">
+       <h2> Post Details </h2>
+      <ul>
+          <li>  title : {{ post.title}}</li>
+          <li>  content :{{ post.content }}</li>
+          <li> date_posted : {{ post.date_posted }}</li>
+          <li> Author : {{author.username }}</li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}
