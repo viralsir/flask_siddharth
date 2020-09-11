@@ -4,14 +4,16 @@
     <table class="table table-sm table-dark">
         <tr>
             <th>title</th>
-
+            <th>Action</th>
         </tr>
         {% for post in posts %}
         <tr>
             <td><a href="{{ url_for('view_post',post_id=post.id) }} ">
                 {{ post.title }}
             </a> </td>
-
+            <td>
+                <a href="{{ url_for('update_post',post_id=post.id)}}"> update</a>
+            </td>
         </tr>
         {% endfor %}
     </table>

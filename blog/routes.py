@@ -1,5 +1,5 @@
 from  flask import Flask,render_template,redirect,url_for,flash,request
-from blog.forms import RegisterForm,LoginForm,UpdateForm,PostForm
+from blog.forms import RegisterForm,LoginForm,UpdateForm,PostForm,UpdatePostForm
 from blog import app,db
 from blog.model import user,Post
 from flask_login import login_user,current_user,logout_user,login_required
@@ -114,3 +114,17 @@ def view_post(post_id):
     author=user.query.get(post.user_id);
     return render_template("post_details.html",post=post,author=author)
 
+@app.route("/post/update/<int:post_id>",methods=['GET','POST'])
+@login_required
+def update_post(post_id):
+    form=UpdatePostForm()
+    post=Post.query.get(post_id);
+    if form.validate_on_submit():
+        post.title=form.title.data
+        post.content=form.content.data
+        db.session.commit()
+        flash(f"{post.title} is updated ","success")
+        return redirect(url_for('Home'))
+    form.title.data=post.title
+    form.content.data=post.content
+    return render_template("post_update.html",form=form)
