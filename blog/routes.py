@@ -10,10 +10,21 @@ import os
 @app.route("/")
 @app.route("/home")
 def Home():
-    posts=Post.query.all();
-    return render_template("home.html",title="Home",posts=posts)
+    #posts=Post.query.all();
+    #return render_template("home.html",title="Home",posts=posts)
+    return render_template("index.html")
 
 
+
+@app.route("/table")
+def tables():
+    posts = Post.query.all();
+    return render_template("tables.html",posts=posts)
+
+
+@app.route("/singlepage")
+def singlepage():
+    return render_template("singlepage.html")
 
 @app.route("/about")
 def about():
@@ -108,7 +119,7 @@ def new_post():
     return render_template("new_post.html",form=form)
 
 @app.route("/post/<int:post_id>")
-@login_required
+#@login_required
 def view_post(post_id):
     post=Post.query.get(post_id);
     author=user.query.get(post.user_id);
