@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>post_json</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script>
+        /*function showPost(){
+
+            fetch("/post_list")
+            .then(response => response.json())
+            .then(function(data){
+                for(key in data["posts"])
+                {
+                    console.log(data["posts"][key]);
+                    let tr=document.createElement("tr")
+
+                    for(k in data["posts"][key])
+                    {
+                        let td=document.createElement("td");
+                        td.innerHTML=data["posts"][key][k]
+                        tr.append(td)
+                    }
+                    // tr.append(.innerHTML=data["posts"][key].author)
+                    // tr.append(document.createElement("td").innerHTML=data["posts"][key].content)
+                    // tr.append(document.createElement("td").innerHTML=data["posts"][key].title)
+
+
+                    document.querySelector("#result").append(tr);
+
+
+                }
+
+            })
+        }
+        */
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "ajax": {
+                        "url": "/post_list",
+                        "dataType": "json"
+                },
+                 columns: [
+                            { data: 'author' },
+                            { data: 'content' },
+                            { data: 'title' },
+                            { data:'date_posted'}
+
+                        ]
+            });
+        } );
+        /*
+        document.addEventListener('DOMContentLoaded',function(){
+
+            document.querySelector("#post").onclick=function(){
+                showPost();
+            }
+        })
+        */
+
+    </script>
+
+</head>
+<body>
+
+    <button id="post">view post</button>
+    <div>
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th> Author</th>
+                    <th> Content</th>
+                    <th> Date Posted </th>
+                    <th> Title</th>
+                </tr>
+            </thead>
+            <tbody id="result">
+            </tbody>
+        </table>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+</body>
+</html>
