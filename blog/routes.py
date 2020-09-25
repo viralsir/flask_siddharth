@@ -1,7 +1,7 @@
 from  flask import Flask,render_template,redirect,url_for,flash,request,jsonify
 from blog.forms import RegisterForm,LoginForm,UpdateForm,PostForm,UpdatePostForm
 from blog import app,db
-from blog.model import user,Post
+from blog.model import user,Post,PostSchema,UserSchema
 from flask_login import login_user,current_user,logout_user,login_required
 import secrets
 import os
@@ -12,13 +12,15 @@ post_list=[
          "title":"first post ",
          "content":"content of first post",
          "author":"vimal",
-         "date_posted":"12 jan 2019"
+         "date_posted":"12 jan 2019",
+         "review":"5"
      },
      {
          "title":"second post ",
          "content":"content of second post",
          "author":"viren",
-         "date_posted":"12 feb 2019"
+         "date_posted":"12 feb 2019",
+         "review":"4"
      }
 
  ]
@@ -107,11 +109,38 @@ data= [
   ]
 
 
+# rest API
+# @app.route("/post" , methods=["GET"])
+#
+#
+# @app.route("/post" , methods=["POST"])
+#
+# @app.route("/post" , methods=["PUT"])
+#
+# @app.route("/post" , methods=["DELETE"])
 
 
+# RETURN ALL DATABASE POST RECOREDS
 @app.route("/post_list")
 def postlist():
-    return jsonify({"data":post_list});
+    posts = Post.query.all();
+    post_schema=PostSchema(many=True);
+    output=post_schema.dump(posts)
+    return jsonify({"data":output});
+
+
+# # CREATE A NEW POST IN DATABASE
+# @app.route("/post_list",methods=["POST"])
+# def postlist():
+#     return jsonify({"data":output});
+#
+#
+# # DELETE POST FROM DATABASE
+# @app.route("/post_list",methods=["DELETE"])
+# def postlist():
+#     return jsonify({"data":output});
+
+
 
 
 @app.route("/json_view")

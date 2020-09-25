@@ -14,7 +14,8 @@
 
             document.querySelectorAll('div').forEach(div =>{
                 div.style.display='none'
-            })
+
+            })http://127.0.0.1:5000/login
 
             document.querySelector(`#${page}`).style.display='block'
         }
@@ -22,6 +23,7 @@
         document.addEventListener('DOMContentLoaded',function (){
 
             document.querySelectorAll("button").forEach(button =>{
+
                 button.onclick=function(){
 
                     showPage(this.dataset.page)

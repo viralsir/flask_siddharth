@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from blog import ma
 from  blog import db,login_manager
 from flask_login import UserMixin
 
@@ -42,3 +42,12 @@ class Post_info(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = user;
+
+class PostSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Post;

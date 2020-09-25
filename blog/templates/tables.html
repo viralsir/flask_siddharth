@@ -21,6 +21,29 @@
 
   <!-- Custom styles for this page -->
   <link href="{{url_for('static',filename='vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script>
+
+    $(document).ready(function() {
+            $('#example').DataTable({
+                "ajax": {
+                        "url": "/post_list",
+                        "dataType": "json"
+                },
+
+                 columns: [
+                            { data: 'content' },
+                            { data: 'date_posted'},
+                            { data: 'title' }
+
+                        ]
+            });
+        } );
+  </script>
+
 
 </head>
 
@@ -348,32 +371,24 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="example" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>title</th>
-                      <th>Action</th>
 
+                    <th> Content</th>
+                    <th> Date Posted </th>
+                    <th> Title</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th>Title</th>
-                      <th>Action</th>
-
+                      <th> Content</th>
+                      <th> Date Posted </th>
+                      <th> Title</th>
                     </tr>
                   </tfoot>
                   <tbody>
-                    {% for post in posts %}
-                      <tr>
-                          <td><a href="{{ url_for('view_post',post_id=post.id) }} ">
-                              {{ post.title }}
-                          </a> </td>
-                          <td>
-                              <a href="{{ url_for('update_post',post_id=post.id)}}"> update</a>
-                          </td>
-                      </tr>
-                      {% endfor %}
+
                   </tbody>
                 </table>
               </div>
@@ -442,6 +457,8 @@
   <!-- Page level custom scripts -->
   <script src="{{url_for('static',filename='js/demo/chart-area-demo.js')}}"></script>
   <script src="{{url_for('static',filename='js/demo/chart-pie-demo.js')}}"></script>
+   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 </body>
 
 </html>
