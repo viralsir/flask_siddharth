@@ -121,9 +121,9 @@ data= [
 
 
 # RETURN ALL DATABASE POST RECOREDS
-@app.route("/post_list")
+@app.route("/post_list",methods=["POST"])
 def postlist():
-    posts = Post.query.all();
+    posts=Post.query.all()
     post_schema=PostSchema(many=True);
     output=post_schema.dump(posts)
     return jsonify({"data":output});
