@@ -4,26 +4,22 @@
     <meta charset="UTF-8">
     <title>Hello</title>
     <script>
-        function hello()
-        {
-            // alert("hello");
-            const h1=document.querySelector("h1");
+         document.addEventListener('DOMContentLoaded',function(){
+             document.querySelector("form").onsubmit=function(){
+                 let val=document.querySelector("#name").value;
+                 //alert(` Hello  ${val}`)
+                 document.querySelector("h1").innerHTML=` Hello ${val}`;
 
-            if(h1.innerHTML === "Hello" )
-            {
-                h1.innerHTML="Good bye";
-            }
-            else
-            {
-                h1.innerHTML="Hello";
-            }
-
-
-        }
+                 return false;
+             }
+         })
     </script>
 </head>
 <body>
-    <h1>Hello</h1>
-    <button onclick="hello()"> click here </button>
+    <h1 >Hello</h1>
+    <form>
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="submit">
+    </form>
 </body>
 </html>
