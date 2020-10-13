@@ -121,7 +121,7 @@ data= [
 
 
 # RETURN ALL DATABASE POST RECOREDS
-@app.route("/post_list",methods=["POST"])
+@app.route("/post_list",methods=["GET","POST"])
 def postlist():
     posts=Post.query.all()
     post_schema=PostSchema(many=True);
@@ -154,6 +154,10 @@ def Home():
     #return render_template("home.html",title="Home",posts=posts)
     return render_template("index.html")
 
+@app.route("/datatable")
+def datatables():
+    posts = Post.query.all();
+    return render_template("data_table_Demo.html",posts=posts)
 
 
 @app.route("/table")
